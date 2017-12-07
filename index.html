@@ -60,6 +60,7 @@
     }
 
     #events li:first-child blockquote {
+        padding: 0 0 0.5rem;
         font-size: 1.5rem;
     }
 
@@ -77,7 +78,6 @@
 
     blockquote {
         margin: 0;
-        padding: 0 0 0.5rem;
         font-size: 1.25rem;
         font-style: italic;
         font-weight: 300;
@@ -95,6 +95,24 @@
     time {
         font-size: 0.75rem;
         padding: 0.5rem 0;
+    }
+
+    .new {
+        padding-top: 1rem;
+        position: relative;
+    }
+
+    .new:before {
+        content: "NEW!";
+        margin-left: -50px;
+        width: 100px;
+        color: #D40026;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: 0;
     }
     </style>
 </head>
@@ -128,6 +146,17 @@
         $counter.innerText = amountOfDays;
         $counter.className = "green";
     }
+
+    var events = document.querySelectorAll("#events li");
+
+    var eventsSeen     = window.localStorage.getItem("seen") || 0,
+        eventsNotSeen  = events.length - eventsSeen;
+
+    for (var i = 0; i < eventsNotSeen; i++) {
+        events[i].className = "new";
+    }
+
+    window.localStorage.setItem("seen", events.length);
     </script>
 </body>
 </html>
