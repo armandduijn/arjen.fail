@@ -28,12 +28,21 @@
         margin: 0 auto;
         width: 200px;
         height: 200px;
-        font-size: 4rem;
+        font-size: 2rem;
         border-radius: 50%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         position: relative;
+    }
+
+    #counter-days {
+        margin-bottom: 0.75rem;
+    }
+
+    .small {
+        font-size: 75%;
     }
 
     .green {
@@ -118,8 +127,12 @@
 </head>
 <body>
     <div id="container">
-        <div id="title">Dagen sinds incapabelheid</div>
-        <div id="counter" class="red">0</div>
+        <div id="title">Tijd sinds incapabelheid</div>
+        <div id="counter" class="red">
+            <div id="counter-days">0 dagen</div>
+            <div id="counter-hours" class="small">0 uur</div>
+            <div id="counter-minutes" class="small">0 minuten</div>
+        </div>
 
         <ul id="events">
             <li>
@@ -140,27 +153,52 @@
     var failTime = document.querySelector("#events li:first-child time").getAttribute("datetime"),
         failDate = new Date(failTime);
 
-    var amountOfDays = Math.floor((new Date() - failDate) / (1000 * 60 * 60 * 24));
+    calculateCounter();
+    highlightUnread();
 
-    var $counter = document.querySelector("#counter");
-    if (amountOfDays == 0) {
-        $counter.innerText = 0;
-        $counter.className = "red";
-    } else {
-        $counter.innerText = amountOfDays;
-        $counter.className = "green";
+    // Recalculate counter every minute
+    setInterval(calculateCounter, 60 * 1000);
+
+    /**
+     * Calculates the time on the counter
+     */
+    function calculateCounter() {
+        console.info("Recalculting counter...");
+
+        var deltaSinceEvent = (new Date() - failDate) / 1000;
+
+        var amountOfDays = Math.floor(deltaSinceEvent / (60 * 60 * 24));
+        deltaSinceEvent -= deltaSinceEvent / (60 * 60 *24); // Hours, minutes and seconds remaining
+
+        var amountOfHours = Math.floor(deltaSinceEvent / (60 * 60)) % 24;
+        deltaSinceEvent -= deltaSinceEvent / (60 * 60); // Minutes and seconds remaining
+
+        var amountOfMinutes = Math.floor(deltaSinceEvent / 60) % 60;
+        deltaSinceEvent -= deltaSinceEvent / 60; // Seconds remaining
+
+        // Add to DOM
+        document.querySelector("#counter").className = amountOfDays == 0 ? "red" : "green";
+
+        document.querySelector("#counter-days").innerText    = (amountOfDays == 1) ? amountOfDays + " dag" : amountOfDays + " dagen";;
+        document.querySelector("#counter-hours").innerText   = amountOfHours + " uur";;
+        document.querySelector("#counter-minutes").innerText = (amountOfMinutes == 1) ? amountOfMinutes + " minuut" : amountOfMinutes + " minuten";;
     }
 
-    var events = document.querySelectorAll("#events li");
+    /**
+     * Highlights unread events
+     */
+    function highlightUnread() {
+        var events = document.querySelectorAll("#events li");
 
-    var eventsSeen     = window.localStorage.getItem("seen") || 0,
-        eventsNotSeen  = events.length - eventsSeen;
+        var eventsSeen     = window.localStorage.getItem("seen") || 0,
+            eventsNotSeen  = events.length - eventsSeen;
 
-    for (var i = 0; i < eventsNotSeen; i++) {
-        events[i].className = "new";
+        for (var i = 0; i < eventsNotSeen; i++) {
+            events[i].className = "new";
+        }
+
+        window.localStorage.setItem("seen", events.length);
     }
-
-    window.localStorage.setItem("seen", events.length);
     </script>
 </body>
 </html>
