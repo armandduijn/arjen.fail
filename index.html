@@ -161,6 +161,14 @@
         font-size: 0.85rem;
     }
 
+    .visible {
+        display: block;
+    }
+
+    .hidden {
+        display: none;
+    }
+
     @media screen and (max-width: 480px) {
         .hide-md {
             display: none;
@@ -169,7 +177,7 @@
     </style>
 </head>
 <body>
-    <div id="banner">
+    <div id="banner" class="hidden">
         <span class="hide-md">Arjen is al meer dan <strong>1 dag</strong> capabel. </span>Iets incapabels gezien? <a href="toevoegen.html" class="btn btn-inverse" title="Heeft Arjen weer gefaald?">Insturen</a>
     </div>
     <div id="container">
@@ -207,11 +215,18 @@
     var failTime = document.querySelector("#events li:first-child time").getAttribute("datetime"),
         failDate = new Date(failTime);
 
-    calculateCounter();
+    var datetime = calculateCounter();
+
     highlightUnread();
 
     // Recalculate counter every minute
     setInterval(calculateCounter, 60 * 1000);
+
+    if (datetime.days >= 1) {
+        document.querySelector("#banner").className = "visible";
+    } else {
+        document.querySelector("#banner").className = "hidden";
+    }
 
     /**
      * Calculates the time on the counter
@@ -236,6 +251,12 @@
         document.querySelector("#counter-days").innerText    = (amountOfDays == 1) ? amountOfDays + " dag" : amountOfDays + " dagen";
         document.querySelector("#counter-hours").innerText   = amountOfHours + " uur";
         document.querySelector("#counter-minutes").innerText = (amountOfMinutes == 1) ? amountOfMinutes + " minuut" : amountOfMinutes + " minuten";
+
+        return {
+            days:    amountOfDays,
+            hours:   amountOfHours,
+            minutes: amountOfMinutes
+        }
     }
 
     /**
