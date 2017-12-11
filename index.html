@@ -147,7 +147,7 @@
     }
 
     #banner {
-        background-color: #D40026;
+        background-color: #4D4A4B;
         color: #FFF;
         width: 100%;
         line-height: 32px;
@@ -178,7 +178,7 @@
 </head>
 <body>
     <div id="banner" class="hidden">
-        <span class="hide-md">Arjen is al meer dan <strong>1 dag</strong> capabel. </span>Iets incapabels gezien? <a href="toevoegen.html" class="btn btn-inverse" title="Heeft Arjen weer gefaald?">Insturen</a>
+        <span class="hide-md">Arjen is al meer dan <strong>1 dag</strong> capabel. </span>Iets incapabels gezien? <a href="mailto:insturen@arjen.fail?subject=Fail!&body=Wat:%0D%0AWanneer:" class="btn btn-inverse" title="Heeft Arjen weer gefaald?">Insturen</a>
     </div>
     <div id="container">
         <div id="title">Tijd sinds incapabelheid</div>
@@ -208,7 +208,7 @@
         </ul>
 
         <div id="footer">
-            <a href="toevoegen.html" class="btn" title="Heeft Arjen weer gefaald?">Insturen</a>
+            <a href="mailto:insturen@arjen.fail?subject=Fail!&body=Wat:%0D%0AWanneer:" class="btn" title="Heeft Arjen weer gefaald?">Insturen</a>
         </div>
     </div>
     <script>
@@ -222,7 +222,7 @@
     // Recalculate counter every minute
     setInterval(calculateCounter, 60 * 1000);
 
-    if (datetime.days >= 1) {
+    if (datetime.days >= 0) {
         document.querySelector("#banner").className = "visible";
     } else {
         document.querySelector("#banner").className = "hidden";
