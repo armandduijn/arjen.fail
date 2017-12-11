@@ -15,10 +15,12 @@
         background-repeat: repeat;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 16px;
+        margin: 0;
+        padding: 0;
     }
 
     #container {
-        margin: 3rem 0 0;
+        margin: 2.5rem 0 0;
         padding: 0 1rem;
         text-align: center;
     }
@@ -123,9 +125,53 @@
         left: 50%;
         top: 0;
     }
+
+    #footer {
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+
+    .btn {
+        background-color: #D40026;
+        font-size: 1rem;
+        text-decoration: none;
+        color: #FFF;
+        padding: 0.5rem 1rem;
+    }
+
+    .btn.btn-inverse {
+        background-color: #000;
+        color: #FFF;
+    }
+
+    #banner {
+        background-color: #D40026;
+        color: #FFF;
+        width: 100%;
+        line-height: 32px;
+        font-size: 0.85rem;
+        padding: 0.75rem;
+        text-align: center;
+    }
+
+    #banner .btn {
+        margin: 0 0.25rem;
+        font-size: 0.85rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        .hide-md {
+            display: none;
+        }
+    }
     </style>
 </head>
 <body>
+    <div id="banner">
+        <span class="hide-md">Arjen is al meer dan <strong>1 dag</strong> capabel. </span>Iets incapabels gezien? <a href="toevoegen.html" class="btn btn-inverse" title="Heeft Arjen weer gefaald?">Insturen</a>
+    </div>
     <div id="container">
         <div id="title">Tijd sinds incapabelheid</div>
         <div id="counter" class="red">
@@ -152,6 +198,10 @@
                 <time datetime="2017-12-04">04-12-2017</time>
             </li>
         </ul>
+
+        <div id="footer">
+            <a href="toevoegen.html" class="btn" title="Heeft Arjen weer gefaald?">Insturen</a>
+        </div>
     </div>
     <script>
     var failTime = document.querySelector("#events li:first-child time").getAttribute("datetime"),
