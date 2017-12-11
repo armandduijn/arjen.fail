@@ -222,7 +222,7 @@
     // Recalculate counter every minute
     setInterval(calculateCounter, 60 * 1000);
 
-    if (datetime.days >= 0) {
+    if (datetime.days >= 1) {
         document.querySelector("#banner").className = "visible";
     } else {
         document.querySelector("#banner").className = "hidden";
